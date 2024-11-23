@@ -24,14 +24,18 @@ data = pd.read_csv('../data/fake_data.csv')
 X = data[['Temperature', 'Humidity', 'Precipitation']]
 y = data['Date']
 
-
+X2 = data[['Temperature']]
 
 # Step 4: Split data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+X_train2, X_test2, y_train2, y_test2 = train_test_split(X2, y, test_size=0.3, random_state=42)
 
 # Step 5: Initialize and train the Naive Bayes model
 model = GaussianNB()
 model.fit(X_train.values, y_train)
+
+model2 = GaussianNB()
+model2.fit(X_train2.values, y_train2)
 
 # Step 6: Make predictions and evaluate accuracy
 # predictions = model.predict(X_test)
@@ -59,10 +63,12 @@ start_time = time.time()  # Current time in seconds since the Epoch
 formatted_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(start_time))
 print(f"started: {formatted_time}")
 
+#Approx 11,027 per minute
+#multiply instructions by 0.0054409662487301 to get estimated seconds
 all_conditions=[]
-for temp_range in range(20,110):
-    for humidity_range in range (0,100):
-        for precipitation_range in range (0,100):
+for temp_range in range(60,90):
+    for humidity_range in range (30,50):
+        for precipitation_range in range (5,10):
 
             new_data = [[temp_range,humidity_range,precipitation_range]]  # Example [Temperature, Humidity, SoilCondition]
 
@@ -88,6 +94,34 @@ for temp_range in range(20,110):
 
 all_conditions.sort(key=lambda item:item[0])
 
+temp_conditions=[]
+for temp_range in range(60,90):
+
+    new_data2 = [[temp_range]]  # Example [Temperature, Humidity, SoilCondition]
+
+    probabilities = model2.predict_proba(new_data2)
+
+    new_conditions=[]
+    for i, prob in enumerate(probabilities[0]):
+        if prob>=threshold:
+            new_conditions.append([model2.classes_[i],prob])
+    for new_day, new_prob in new_conditions:
+        day_found=False
+        if len(temp_conditions)>0:
+            # print(f"all conditions: {all_conditions}")
+            for i in range(len(temp_conditions)):
+                if new_day==temp_conditions[i][0]:
+                    temp_conditions[i][1]+=new_prob
+                    temp_conditions[i][2]+=1
+                    day_found=True
+                    break
+        if not day_found:
+            temp_conditions.append([new_day,new_prob,1])
+
+
+temp_conditions.sort(key=lambda item:item[0])
+
+
 
 # Print out the range of possible weather conditions and their probabilities
 # print("OUTPUT 1:")
@@ -102,12 +136,31 @@ graph_names=[]
 for condition, prob,count in all_conditions:
     adjusted_prob=prob/count*1000
     graph_probs.append(adjusted_prob)
+    graph_names.append(condition)
     # print(f"Condition: {condition}, Probability: {adjusted_prob:.2f}")
 
 sig=2
 gauss_probs=gaussian_filter1d(graph_probs,sigma=sig)
 
-plt.plot(gauss_probs)
+graph_probs2=[]
+graph_names2=[]
+for condition, prob,count in temp_conditions:
+    adjusted_prob=prob/count*1000
+    graph_probs2.append(adjusted_prob)
+    graph_names2.append(condition)
+    # print(f"Condition: {condition}, Probability: {adjusted_prob:.2f}")
+
+gauss_probs2=gaussian_filter1d(graph_probs2,sigma=sig)
+
+
+
+
+plt.plot(graph_names,gauss_probs)
+plt.fill_between(graph_names,gauss_probs,color="green",alpha=.2)
+
+plt.plot(graph_names2,gauss_probs2)
+plt.fill_between(graph_names2,gauss_probs2,color="red",alpha=.2)
+
 plt.ylabel("Probability")
 plt.xlabel("Day of year")
 
