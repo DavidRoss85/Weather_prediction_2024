@@ -6,10 +6,10 @@ from scipy.ndimage import gaussian_filter1d
 print("Check")
 m=NaiveBayesModel()
 
-m.import_data("../data/fake_data.csv")
-d=DataSet()
-d.features=m.get_data()[['Temperature', 'Humidity', 'Precipitation']]
-d.labels=m.get_data()['Date']
+d=DataSet("","../data/fake_data.csv")
+
+d.set_features(['Temperature', 'Humidity', 'Precipitation'])
+d.set_labels('Date')
 d.threshold=0
 d.input_ranges=[Range(70,75),Range(30,50),Range(0,5)]
 

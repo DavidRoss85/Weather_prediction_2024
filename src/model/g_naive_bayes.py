@@ -25,19 +25,9 @@ class NaiveBayesModel:
         self.__data=None
         self.__data_sets=dict() #Stores all of the datasets
         self.__model=GaussianNB()
-        self.__is_model_trained=False
-
-    def get_data(self):
-        return self.__data
+        self.__model_trained=False
 
 
-    ##################################################################################################
-    def import_data(self,filename):
-        self.__data_filename=filename
-        try:
-            self.__data=pd.read_csv(filename)
-        except Exception as err:
-            self.__handle_error(err,f"Could not import {filename}","import_data")
 
     ##################################################################################################
     def set_dataset(self,key,dataset:DataSet):
@@ -46,7 +36,7 @@ class NaiveBayesModel:
 
     ##################################################################################################
     def train_model(self, dataset:DataSet,test_size=0.3,random_state=40):
-        if self.__data is None:
+        if dataset.get_data() is None:
             self.__show_message("Data must be imported before training.")
             return
 
@@ -60,7 +50,7 @@ class NaiveBayesModel:
         self.__model.fit(x_train.values,y_train)
 
         self.__show_message("Model training successful")
-        self.__is_model_trained=True
+        self.__model_trained=True
 
     ##################################################################################################
     def drop_data(self,category:str):
@@ -75,7 +65,7 @@ class NaiveBayesModel:
     def run_prediction(self,dataset:DataSet)->DataSet:
         # Approx 11,027 per minute
         # multiply instructions by 0.0054409662487301 to get estimated seconds
-        if not self.__is_model_trained:
+        if not self.__model_trained:
             self.train_model(dataset)
         print("Prediction running")
         #Recursive function: O(i*n)

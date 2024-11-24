@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99317609-a16a-40d3-a299-7e059cb7ad4d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/g_naive_bayes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/g_naive_bayes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/structures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sandbox/scratch.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sandbox/scratch.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sandbox/test_model_class.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sandbox/test_model_class.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
