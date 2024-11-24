@@ -1,6 +1,5 @@
 import time
 import pandas as pd
-from pandas import bdate_range
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 
@@ -8,7 +7,6 @@ import matplotlib.pyplot as plt
 from scipy.ndimage import gaussian_filter1d
 
 from src.model.structures import DataSet,Range
-from src.sandbox.scratch import threshold, all_conditions
 
 
 #Steps to running model
@@ -52,7 +50,7 @@ class NaiveBayesModel:
             self.__show_message("Data must be imported before training.")
             return
 
-        #split data:
+        # split data:
         x_train,xtest,y_train,y_test=train_test_split(
             dataset.features,
             dataset.labels,
@@ -60,6 +58,7 @@ class NaiveBayesModel:
             random_state=random_state
         )
         self.__model.fit(x_train.values,y_train)
+
         self.__show_message("Model training successful")
         self.__is_model_trained=True
 
@@ -97,20 +96,16 @@ class NaiveBayesModel:
                 dataset.input_data=new_data
                 dataset=self.__make_prediction(dataset)
 
-                #Sort dataset by day:
-                dataset.probability_dist.sort(key=lambda item:item[0])
-
         return dataset
 
     ##################################################################################################
     def __make_prediction(self,dataset:DataSet)->DataSet:
         #MEAT AND POTATOES:
-        all_conditions=dataset.probability_dist
+        all_conditions=dataset.get_probability_dist()
         new_data = dataset.input_data  # Example [Temperature, Humidity, SoilCondition]
         threshold=dataset.threshold
 
-        probabilities = self.__model.predict_proba(new_data)
-
+        probabilities = self.__model.predict_proba([new_data])
         new_conditions = []
         for i, prob in enumerate(probabilities[0]):
             if prob >= threshold:
@@ -127,7 +122,9 @@ class NaiveBayesModel:
                         break
             if not day_found:
                 all_conditions.append([new_day, new_prob, 1])
-        dataset.probability_dist=all_conditions
+        dataset.set_probability_dist(all_conditions)
+        # Sort dataset by day:
+        dataset.sort_probability_dist()
         return dataset
 
     ##################################################################################################
