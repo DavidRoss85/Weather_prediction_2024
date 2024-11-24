@@ -96,6 +96,7 @@ class NaiveBayesModel:
         threshold=dataset.threshold
 
         probabilities = self.__model.predict_proba([new_data])
+
         new_conditions = []
         for i, prob in enumerate(probabilities[0]):
             if prob >= threshold:
