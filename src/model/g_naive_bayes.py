@@ -42,8 +42,8 @@ class NaiveBayesModel:
 
         # split data:
         x_train,xtest,y_train,y_test=train_test_split(
-            dataset.features,
-            dataset.labels,
+            dataset.get_features(),
+            dataset.get_labels(),
             test_size=test_size,
             random_state=random_state
         )

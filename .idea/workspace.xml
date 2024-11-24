@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99317609-a16a-40d3-a299-7e059cb7ad4d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/model/g_naive_bayes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/g_naive_bayes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/structures.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sandbox/test_model_class.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sandbox/test_model_class.py" afterDir="false" />
-    </list>
+    <list default="true" id="99317609-a16a-40d3-a299-7e059cb7ad4d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,6 +34,7 @@
     "Python.g_naive_bayes.executor": "Run",
     "Python.rnd_data_generator.executor": "Run",
     "Python.scratch.executor": "Run",
+    "Python.structures.executor": "Run",
     "Python.test_model_class.executor": "Run",
     "Python.test_speed.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
