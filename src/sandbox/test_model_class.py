@@ -7,11 +7,14 @@ print("Check")
 m=NaiveBayesModel()
 
 d=DataSet("Warm months","../data/fake_data.csv")
+d.filter_data('Temperature',80)
+
 d.set_features(['Temperature', 'Humidity', 'Precipitation'])
 d.set_labels('Date')
 d.threshold=0
 d.input_ranges=[Range(70,75),Range(30,50),Range(0,5)]
 d.set_graph_color("black","red")
+
 
 d2=DataSet("Cold Months","../data/fake_data.csv")
 d2.set_features(['Temperature', 'Humidity', 'Precipitation'])
@@ -31,12 +34,14 @@ d2.gaussify()
 g=GraphGUI("Weather","day of year","Likelihood")
 g.add_graph(d.graph)
 g.add_graph(d2.graph)
-g.show()
 
+# mmm= d.get_category_list("Nada")
+# print(f"THE LIST: {mmm}")
+g.show()
 # plt.show()
 # plt.plot(d.graph.x_values,d.graph.y_values)
 # plt.fill_between(d.graph.x_values,d.graph.y_values,color="green",alpha=.2)
 
-plt.show()
+# plt.show()
 
 print("DONE")

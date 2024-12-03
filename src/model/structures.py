@@ -19,6 +19,12 @@ class DataSet:
         if filename != "" and filename is not None:
             self.import_data(filename)
 
+    def get_category_list(self,category):
+        cat_list=list()
+        if self.__data is not None:
+            cat_list=self.__data[category].unique().tolist()
+        return cat_list
+
     ##################################################################################################
     def get_data(self):
         return self.__data
@@ -59,9 +65,48 @@ class DataSet:
     def import_data(self, filename):
         self.__data_filename = filename
         try:
-            self.__data = pd.read_csv(filename)
+            self.__data = pd.read_csv(filename,low_memory=False)
         except Exception as err:
             self.__handle_error(err, f"Could not import {filename}", "import_data")
+    ##################################################################################################
+    def filter_data(self,category,value):
+        """
+        Filters the data to those that match criteria
+        :param category: column to search
+        :param value: value to search for
+        :return: filtered list
+        """
+        data=self.__data[self.__data[category]==value]
+        self.__data=data
+        return data
+    ##################################################################################################
+    def drop_duplicates(self,criteria_list:list=None,sort_list:list=None):
+        if criteria_list is None:
+            self.__data.drop_duplicates()
+        else:
+            by_list=sort_list if sort_list is not None else criteria_list
+            sorted_data=self.sort_data(by_list)
+            self.__data = sorted_data.drop_duplicates(subset=criteria_list,keep='first')
+
+        self.__show_message("Duplicate rows dropped")
+    ##################################################################################################
+    def drop_data(self, category: str):
+        if self.__data is not None:
+            try:
+                self.__data = self.__data.drop(columns=category)
+                self.__show_message(f"{category} column dropped.")
+            except Exception as err:
+                self.__handle_error(err, f"Could not drop data category {category}", "drop_data")
+    ##################################################################################################
+    def sort_data(self,sort_criteria:list=None):
+        if sort_criteria is None: return
+        self.__data= self.__data.sort_values(by=sort_criteria, na_position='last')
+        return self.__data
+    ##################################################################################################
+    def convert_dates_to_julian(self,date_col):
+        self.__data[f"{date_col}_t"]=pd.to_datetime(self.__data[date_col])
+        self.__data[date_col]=self.__data[f"{date_col}_t"].dt.dayofyear
+        return self.__data
 
     ##################################################################################################
     def sort_probability_dist(self):
@@ -89,6 +134,9 @@ class DataSet:
     def __handle_error(self, err, msg: str = None, entry: str = None):
         print(f"Error{(' in ' + entry) if not None else ''}:\n"
               f"\t{msg}\n\t{err}")
+    ##################################################################################################
+    def __show_message(self,msg:str=""):
+        print(msg)
 
 
 

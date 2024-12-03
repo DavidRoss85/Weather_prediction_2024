@@ -52,6 +52,7 @@ class NaiveBayesModel:
         self.__show_message("Model training successful")
         self.__model_trained=True
 
+
     ##################################################################################################
     def drop_data(self,category:str):
         if self.__data is not None:
