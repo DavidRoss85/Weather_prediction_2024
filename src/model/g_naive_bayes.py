@@ -30,7 +30,7 @@ class NaiveBayesModel:
 
 
     ##################################################################################################
-    def set_dataset(self,key,dataset:DataSet):
+    def add_dataset(self,key,dataset:DataSet):
         self.__data_sets[key]=dataset
         self.__show_message(f"Dataset: {dataset.name} added")
 
@@ -78,7 +78,10 @@ class NaiveBayesModel:
         ranges_copy = all_ranges.copy()
         current_range = ranges_copy.pop(0)
 
-        for i in range(current_range.low, current_range.high + 1):
+        # for i in range(current_range.low, current_range.high + current_range.step,current_range.step):
+        i=current_range.low
+        while i < current_range.high:
+            i+=current_range.step
             new_data = pre_list.copy()
             new_data.append(i)
             if len(ranges_copy) > 0:

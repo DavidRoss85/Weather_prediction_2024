@@ -1,4 +1,6 @@
+from unittest.mock import inplace
 
+from fontTools.subset import subset
 from scipy.ndimage import gaussian_filter1d
 import pandas as pd
 
@@ -16,6 +18,10 @@ class DataSet:
         self.input_ranges=[]
         self.graph=Graph(name,[],[])
         self.scale = 1
+        self.__filled_nan=False
+        self.__fill_nan_value=None
+        self.__dropped_nan=False
+
         if filename != "" and filename is not None:
             self.import_data(filename)
 
@@ -66,6 +72,10 @@ class DataSet:
         self.__data_filename = filename
         try:
             self.__data = pd.read_csv(filename,low_memory=False)
+            # self.__data.dropna()
+            self.__filled_nan=False
+            self.__fill_nan_value=None
+            self.__dropped_nan=False
         except Exception as err:
             self.__handle_error(err, f"Could not import {filename}", "import_data")
     ##################################################################################################
@@ -109,6 +119,20 @@ class DataSet:
         return self.__data
 
     ##################################################################################################
+    def fill_nan_values(self,replacement):
+        self.__filled_nan=True
+        self.__fill_nan_value=replacement
+        self.__data.fillna(replacement,inplace=True)
+
+    ##################################################################################################
+    def drop_nan_values(self,categories:list=None):
+        if categories is None or categories == []:
+            self.__data.dropna(inplace=True)
+        else:
+            self.__data.dropna(subset=categories,inplace=True)
+
+        self.__dropped_nan=True
+    ##################################################################################################
     def sort_probability_dist(self):
         self.__probability_dist.sort(key=lambda item: item[0])
         graph_probs = []
@@ -143,9 +167,10 @@ class DataSet:
 
 #------------------------Range----------------------------------------
 class Range:
-    def __init__(self,low,high):
+    def __init__(self,low,high,step=1):
         self.low=low
         self.high=high
+        self.step=step
 
 #------------------------Graph----------------------------------------
 class Graph:

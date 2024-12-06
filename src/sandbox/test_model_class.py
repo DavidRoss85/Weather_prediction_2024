@@ -6,22 +6,45 @@ import matplotlib.pyplot as plt
 print("Check")
 m=NaiveBayesModel()
 
-d=DataSet("Warm months","../data/fake_data.csv")
-d.filter_data('Temperature',80)
+d=DataSet("Warm months","../data/final_combined_data.csv")
+# d.filter_data('Temperature',80)
 
-d.set_features(['Temperature', 'Humidity', 'Precipitation'])
-d.set_labels('Date')
+d.drop_data("SOURCE_FILE")
+d.drop_data("VALUE")
+d.drop_data('COMMODITY')
+d.drop_duplicates()
+d.drop_duplicates(['YEAR','COUNTY','DATE'],['TAVG','TMAX','TMIN','PRCP','AWND','SNOW'])
+d.convert_dates_to_julian('DATE')
+# d.filter_data('DATE',1)
+d.sort_data(['YEAR'])
+# d.fill_nan_values(20)
+d.drop_nan_values(['PRCP'])
+
+d.set_features(['PRCP'])
+d.set_labels('DATE')
 d.threshold=0
-d.input_ranges=[Range(70,75),Range(30,50),Range(0,5)]
+d.input_ranges=[Range(0,.3,.01)]
 d.set_graph_color("black","red")
 
 
-d2=DataSet("Cold Months","../data/fake_data.csv")
-d2.set_features(['Temperature', 'Humidity', 'Precipitation'])
-d2.set_labels('Date')
+d2=DataSet("Cold Months","../data/final_combined_data.csv")
+
+d2.drop_data("SOURCE_FILE")
+d2.drop_data("VALUE")
+d2.drop_data('COMMODITY')
+d2.drop_duplicates()
+d2.drop_duplicates(['YEAR','COUNTY','DATE'],['TAVG','TMAX','TMIN','PRCP','AWND','SNOW'])
+d2.convert_dates_to_julian('DATE')
+# d.filter_data('DATE',1)
+d2.sort_data(['YEAR'])
+
+# d2.fill_nan_values(-10)
+d2.set_features(['PRCP'])
+d2.set_labels('DATE')
 d2threshold=0
-d2.input_ranges=[Range(20,35),Range(30,50),Range(0,5)]
+d2.input_ranges=[Range(.3,1,.01)]
 d2.set_graph_color("black","blue")
+
 
 m.train_model(d)
 

@@ -13,13 +13,14 @@ d.drop_data('COMMODITY')
 d.drop_duplicates()
 d.drop_duplicates(['YEAR','COUNTY','DATE'],['TAVG','TMAX','TMIN','PRCP','AWND','SNOW'])
 d.convert_dates_to_julian('DATE')
-d.filter_data('DATE',1)
+# d.filter_data('DATE',1)
 d.sort_data(['YEAR'])
-
-# d.set_features(['TAVG', 'AWND', 'PRCP'])
-# d.set_labels('DATE')
-# d.threshold=0
-# d.input_ranges=[Range(70,75),Range(30,50),Range(0,5)]
-# d.set_graph_color("black","red")
-
+d.drop_nan_values()
+# d.fill_nan_values(-9999)
+d.set_features(['TAVG', 'AWND', 'PRCP'])
+d.set_labels('DATE')
+d.threshold=0
+d.input_ranges=[Range(70,75),Range(30,50),Range(0,5)]
+d.set_graph_color("black","red")
+# m.train_model(d)
 print(f"{d.get_data()}")
