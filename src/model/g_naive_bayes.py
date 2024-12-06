@@ -41,12 +41,20 @@ class NaiveBayesModel:
             return
 
         # split data:
-        x_train,xtest,y_train,y_test=train_test_split(
-            dataset.get_features(),
-            dataset.get_labels(),
-            test_size=test_size,
-            random_state=random_state
-        )
+        x_train=0
+        y_train=0
+        x_test=0
+        y_test=0
+        try:
+            x_train,x_test,y_train,y_test=train_test_split(
+                dataset.get_features(),
+                dataset.get_labels(),
+                test_size=test_size,
+                random_state=random_state
+            )
+        except ValueError as err:
+            self.__handle_error(err,"Bad value passed to traiiner","train_model")
+
         self.__model.fit(x_train.values,y_train)
 
         self.__show_message("Model training successful")

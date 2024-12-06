@@ -17,7 +17,7 @@ class DataSet:
         self.input_data = []
         self.input_ranges=[]
         self.graph=Graph(name,[],[])
-        self.scale = 1
+        self.__scale = 1
         self.__filled_nan=False
         self.__fill_nan_value=None
         self.__dropped_nan=False
@@ -25,6 +25,8 @@ class DataSet:
         if filename != "" and filename is not None:
             self.import_data(filename)
 
+
+    ##################################################################################################
     def get_category_list(self,category):
         cat_list=list()
         if self.__data is not None:
@@ -50,6 +52,9 @@ class DataSet:
     def set_labels(self,category:str):
         self.__labels=self.__data[category]
     ##################################################################################################
+    def set_scale(self,size:float=1):
+        self.__scale=size
+    ##################################################################################################
     def set_graph_color(self,line_color="black",fill_color="green",alpha=.2):
         self.graph.line_color=line_color
         self.graph.fill_color=fill_color
@@ -60,7 +65,7 @@ class DataSet:
         graph_probs = []
         graph_names = []
         for condition, prob, count in new_dist:
-            adjusted_prob = prob / count * self.scale
+            adjusted_prob = prob / count * self.__scale
             graph_probs.append(adjusted_prob)
             graph_names.append(condition)
         self.graph.x_values=graph_names
@@ -133,12 +138,18 @@ class DataSet:
 
         self.__dropped_nan=True
     ##################################################################################################
+    def replace_nan_using_avg(self,nan_category,categories:list):
+        self.__data[nan_category] = self.__data.apply(
+            lambda row: row[categories].mean(skipna=True)
+            if pd.isna(row[nan_category]) else row[nan_category], axis=1
+        )
+    ##################################################################################################
     def sort_probability_dist(self):
         self.__probability_dist.sort(key=lambda item: item[0])
         graph_probs = []
         graph_names = []
         for condition, prob, count in self.__probability_dist:
-            adjusted_prob = prob / count * self.scale
+            adjusted_prob = prob / count * self.__scale
             graph_probs.append(adjusted_prob)
             graph_names.append(condition)
         self.graph.x_values = graph_names
