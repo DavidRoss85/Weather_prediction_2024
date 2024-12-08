@@ -2,7 +2,7 @@ import os
 import sys
 
 #For compatibility:
-# sys.path.insert(0,os.path.join(os.path.dirname(__file__),'../..'))
+sys.path.insert(0,os.path.join(os.path.dirname(__file__),'../..'))
 
 #User interface window
 from src.gui.UserInterface import UserInterface

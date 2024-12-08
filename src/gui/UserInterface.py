@@ -1,5 +1,5 @@
 import copy
-# import os
+import os
 from src.gui.Graph import GraphGUI
 from src.gui.Window_GUI import Window
 from src.model.g_naive_bayes import NaiveBayesModel
@@ -16,7 +16,7 @@ class UserInterface:
     WIND_TITLE='AWND'
     PRECIP_TITLE='PRCP'
     LOCATION_DEFAULT_TEXT = "Select a location"
-    ABSOLUTE_PATH=".."#os.path.join(os.path.dirname(__file__),'..')
+    ABSOLUTE_PATH=os.path.join(os.path.dirname(__file__),'..')
     D_FILE = f"{ABSOLUTE_PATH}/data/final_combined_data.csv"
     C_FILE = f"{ABSOLUTE_PATH}/data/crop_conditions_updated.csv"
 

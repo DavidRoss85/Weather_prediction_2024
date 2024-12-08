@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99317609-a16a-40d3-a299-7e059cb7ad4d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/gui/UserInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/UserInterface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/weather_app/run_weather.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/weather_app/run_weather.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Weather_prediction_2024.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Weather_prediction_2024.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,23 +33,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.g_naive_bayes.executor&quot;: &quot;Run&quot;,
-    &quot;Python.rnd_data_generator.executor&quot;: &quot;Run&quot;,
-    &quot;Python.run_weather.executor&quot;: &quot;Run&quot;,
-    &quot;Python.scratch.executor&quot;: &quot;Run&quot;,
-    &quot;Python.structures.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.test_data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_model_class.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_speed.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/David/Desktop/MySDE/Python/Weather_prediction_2024/src/data&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.g_naive_bayes.executor": "Run",
+    "Python.rnd_data_generator.executor": "Run",
+    "Python.run_weather.executor": "Run",
+    "Python.scratch.executor": "Run",
+    "Python.structures.executor": "Debug",
+    "Python.test_data.executor": "Run",
+    "Python.test_model_class.executor": "Run",
+    "Python.test_speed.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/David/Desktop/MySDE/Python/Weather_prediction_2024/src/data",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\David\Desktop\MySDE\Python\Weather_prediction_2024\src\data" />
