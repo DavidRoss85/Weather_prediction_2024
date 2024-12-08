@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99317609-a16a-40d3-a299-7e059cb7ad4d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/data/crop_conditions_updated.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/input_validation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/UserInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/UserInterface.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/Window_GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Window_GUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/g_naive_bayes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/g_naive_bayes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/structures.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/structures.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

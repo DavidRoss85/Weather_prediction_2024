@@ -89,12 +89,12 @@ class UserInterface:
 
     def __create_labels(self):
         # generate a big label
-        big_label = Window.Label("lblTitle", "Input settings", 40, 1, -50, 50)
+        big_label = Window.Label("lblTitle", "Weather prediction input settings", 40, 1, -50, 0)
         big_label.forecolor = "red"
         big_label.font_size = 30
 
         # Attach to main window:
-        self.__main_window.add_widget(big_label)
+        self.__main_frame.add_widget(big_label)
 
         # generate labels for variables
         l1 = Window.Label("lblTemp", "Temperature:", 17, 0, 100, 300)
@@ -157,7 +157,7 @@ class UserInterface:
         self.__temp_model.reset_model()
         self.__prcp_model.reset_model()
         self.__wind_model.reset_model()
-        
+
     def populate_values(self):
         crop=self.__crop_variable.get()
         put=self.__main_frame.set_text_value
@@ -276,7 +276,7 @@ class UserInterface:
             tm.train_model(td)
         else:
             self.__main_window.show_message(
-                "No data available for the specified temperatures and location.",
+                "No data available for the specified temperatures in this location.",
                 title="Empty Dataset"
             )
 
@@ -284,12 +284,17 @@ class UserInterface:
             pm.train_model(p_d)
         else:
             self.__main_window.show_message(
-                "No data available for the specified temperatures and location.",
+                "No data available for the specified precipitation in this location.",
                 title="Empty Dataset"
             )
 
         if not wd.is_empty():
             wm.train_model(wd)
+        else:
+            self.__main_window.show_message(
+                "No data available for the specified wind speed in this location.",
+                title="Empty Dataset"
+            )
 
     def get_predictions(self):
         tm=self.__temp_model

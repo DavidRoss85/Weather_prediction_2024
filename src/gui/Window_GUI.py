@@ -179,7 +179,7 @@ class Window(_Parent):
 
 
     def show_message(self,message:str,*,title=None,box_type=None,icon=None,default=None,parent=None,command=None):
-        messagebox.Message(master=self,message=message,title=None)
+        messagebox.Message(message=message,title=title,icon=icon,type=box_type,default=default,parent=parent,command=command).show()
 
     def display_window(self):
         """
