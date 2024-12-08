@@ -393,7 +393,7 @@ class UserInterface:
         self.__prcp_data.gaussify()
         self.__wind_data.gaussify()
 
-        # self.__graph.add_graph(self.__temp_data.graph)
+        self.__graph.add_graph(self.__temp_data.graph)
         self.__graph.add_graph(self.__prcp_data.graph)
         self.__graph.add_graph(self.__wind_data.graph)
 
