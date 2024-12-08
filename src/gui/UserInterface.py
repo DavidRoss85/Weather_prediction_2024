@@ -313,6 +313,7 @@ class UserInterface:
         self.__prcp_data.input_ranges = [self.__prcp_range]
         self.__prcp_data.set_name("Precipitation")
         self.__prcp_data.set_graph_color("black","blue")
+        print(f"PRCP DATA:\n{self.__prcp_data.get_data()}\n\n")
 
         #Wind Settings
         self.__wind_data.drop_nan_values(['AWND'])
@@ -321,6 +322,7 @@ class UserInterface:
         self.__wind_data.input_ranges = [self.__wind_range]
         self.__wind_data.set_name("Wind")
         self.__wind_data.set_graph_color("black","green")
+        print(f"WIND DATA:\n{self.__wind_data.get_data()}")
 
     def train_models(self):
         """
@@ -377,9 +379,9 @@ class UserInterface:
         if tm.is_trained():
             td=tm.run_prediction(td)
         if pm.is_trained():
-            p_d=pm.train_model(p_d)
+            p_d=pm.run_prediction(p_d)
         if wm.is_trained():
-            wd=wm.train_model(wd)
+            wd=wm.run_prediction(wd)
 
 
     def show_graph(self):
@@ -391,7 +393,7 @@ class UserInterface:
         self.__prcp_data.gaussify()
         self.__wind_data.gaussify()
 
-        self.__graph.add_graph(self.__temp_data.graph)
+        # self.__graph.add_graph(self.__temp_data.graph)
         self.__graph.add_graph(self.__prcp_data.graph)
         self.__graph.add_graph(self.__wind_data.graph)
 
