@@ -32,23 +32,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.g_naive_bayes.executor": "Run",
-    "Python.rnd_data_generator.executor": "Run",
-    "Python.run_weather.executor": "Run",
-    "Python.scratch.executor": "Run",
-    "Python.structures.executor": "Debug",
-    "Python.test_data.executor": "Run",
-    "Python.test_model_class.executor": "Run",
-    "Python.test_speed.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/David/Desktop/MySDE/Python/Weather_prediction_2024/src/data"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.g_naive_bayes.executor&quot;: &quot;Run&quot;,
+    &quot;Python.rnd_data_generator.executor&quot;: &quot;Run&quot;,
+    &quot;Python.run_weather.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scratch.executor&quot;: &quot;Run&quot;,
+    &quot;Python.structures.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.test_data.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_model_class.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_speed.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/David/Desktop/MySDE/Python/Weather_prediction_2024/src/data&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\David\Desktop\MySDE\Python\Weather_prediction_2024\src\data" />
