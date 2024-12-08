@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 class _Parent:
     """
@@ -405,6 +406,56 @@ class Window(_Parent):
                 width=self.width,
                 font=(self.font_name,self.font_size)
             )
+    # -------------------ComboBox-------------------------
+
+    class ComboBox(_Element):
+        index = 0
+
+        def __init__(self, name="combobox" + str(index), options:list=["Select"], initial_selection:int=0, width=7, height=1, left=0, top=0):
+            super().__init__(name, left, top, width, height, Window.DEFAULT_BACKGROUND_COLOR, Window.DEFAULT_FONT_COLOR)
+            self.type = "combobox"
+            self.options=options
+            self.initial_selection=initial_selection
+            self.variable = tk.StringVar()
+            self.index += 1
+
+        def build(self, master):
+            return ttk.Combobox(
+                master=master,
+                name=self.name,
+                textvariable=self.variable,
+                values=self.options,
+                background=self.background,
+                foreground=self.forecolor,
+                height=self.height,
+                width=self.width,
+                font=(self.font_name, self.font_size),
+            )
+
+ # -------------------ComboBox-------------------------
+
+    class CheckBox(_Element):
+        index = 0
+
+        def __init__(self, name="checkbox" + str(index),text:str="", initial_selection:int=0, width=7, height=1, left=0, top=0):
+            super().__init__(name, left, top, width, height, Window.DEFAULT_BACKGROUND_COLOR, Window.DEFAULT_FONT_COLOR)
+            self.type = "checkbox"
+            self.options=[]
+            self.initial_selection=initial_selection
+            self.variable = tk.IntVar()
+            self.index += 1
+            self.text=text
+
+        def build(self, master):
+
+            return tk.Checkbutton(
+                master=master,
+                text=self.text,
+                variable=self.variable,
+                onvalue=1,
+                offvalue=0
+            )
+
 
 
 ## For testing:

@@ -73,6 +73,10 @@ class DataSet:
 
     ##################################################################################################
 
+    def set_name(self,name):
+        self.name=name
+        self.graph.name=name
+    ##################################################################################################
     def import_data(self, filename):
         self.__data_filename = filename
         try:
