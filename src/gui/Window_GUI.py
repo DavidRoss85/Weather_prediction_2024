@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from tkinter import ttk
 
 class _Parent:
@@ -51,8 +52,6 @@ class _Parent:
                         lambda args: widget.mouse_over(self, args) if widget.mouse_over is not None else None)
         new_widget.bind("<Leave>",
                         lambda args: widget.mouse_off(self, args) if widget.mouse_off is not None else None)
-        new_widget.bind("<Button-1>",
-                        lambda args: widget.on_click(self, args) if widget.on_click is not None else None)
         new_widget.bind("<ButtonRelease>",
                         lambda args: widget.on_mouse_up(self, args) if widget.on_mouse_up is not None else None)
         new_widget.bind("<Return>",
@@ -61,6 +60,13 @@ class _Parent:
                         lambda args: widget.on_keypress(self, args) if widget.on_keypress is not None else None)
         new_widget.bind("<KeyRelease>",
                         lambda args: widget.on_keyup(self, args) if widget.on_keyup is not None else None)
+        if widget.type != "button":
+            new_widget.bind("<Button-1>",
+                        lambda args: widget.on_click(self, args) if widget.on_click is not None else None)
+
+        if widget.type=="combobox":
+            new_widget.bind("<<ComboboxSelected>>",
+                            lambda args: widget.on_select(self, args) if widget.on_select is not None else None)
 
         # Pack and Position the new widget:
         new_widget.place(x=widget.left, y=widget.top)
@@ -172,7 +178,8 @@ class Window(_Parent):
         self.__on_mouse_up=None
 
 
-
+    def show_message(self,message:str,*,title=None,box_type=None,icon=None,default=None,parent=None,command=None):
+        messagebox.Message(master=self,message=message,title=None)
 
     def display_window(self):
         """
@@ -337,7 +344,8 @@ class Window(_Parent):
                 foreground=self.forecolor,
                 width=self.width,
                 height=self.height,
-                font=(self.font_name,self.font_size)
+                font=(self.font_name,self.font_size),
+                command=self.on_click
             )
     #-------------------TextBox-------------------------
     class TextBox(_Element):
@@ -418,6 +426,7 @@ class Window(_Parent):
             self.initial_selection=initial_selection
             self.variable = tk.StringVar()
             self.index += 1
+            self.on_select=None
 
         def build(self, master):
             return ttk.Combobox(

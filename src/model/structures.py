@@ -25,6 +25,8 @@ class DataSet:
         if filename != "" and filename is not None:
             self.import_data(filename)
 
+    def is_empty(self):
+        return self.__data.empty
 
     ##################################################################################################
     def get_category_list(self,category):
@@ -87,6 +89,9 @@ class DataSet:
             self.__dropped_nan=False
         except Exception as err:
             self.__handle_error(err, f"Could not import {filename}", "import_data")
+    ##################################################################################################
+    def get_dictionary_from_data(self,index_key):
+        return self.__data.set_index(index_key).to_dict(orient='index')
     ##################################################################################################
     def filter_data(self,category,value):
         """

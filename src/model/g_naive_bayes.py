@@ -28,6 +28,12 @@ class NaiveBayesModel:
         self.__model_trained=False
 
 
+    def reset_model(self):
+        self.__data_filename=None
+        self.__data=None
+        self.__data_sets=dict() #Stores all of the datasets
+        self.__model=GaussianNB()
+        self.__model_trained=False
 
     ##################################################################################################
     def add_dataset(self,key,dataset:DataSet):
@@ -60,7 +66,9 @@ class NaiveBayesModel:
         self.__show_message("Model training successful")
         self.__model_trained=True
 
-
+    ##################################################################################################
+    def is_trained(self):
+        return self.__model_trained
     ##################################################################################################
     def drop_data(self,category:str):
         if self.__data is not None:
