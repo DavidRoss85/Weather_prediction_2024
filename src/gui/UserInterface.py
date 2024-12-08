@@ -8,6 +8,9 @@ from src.utils.input_validation import validate_float
 
 
 class UserInterface:
+    """
+    The main window the user will interface with
+    """
     LOCATION_TITLE='COUNTY'
     TEMPERATURE_TITLE='TAVG'
     WIND_TITLE='AWND'
@@ -53,9 +56,17 @@ class UserInterface:
 
 
     def show(self):
+        """
+        Render window
+        :return:
+        """
         self.__main_window.display_window()
 
     def __put_things_in_window(self):
+        """
+        Run routine for each object type
+        :return:
+        """
         # Generate widgets and attach to frame:
         self.__create_comboboxes()
         self.__create_labels()
@@ -63,7 +74,11 @@ class UserInterface:
         self.__create_text_fields()
 
     def __create_text_fields(self):
-        # Generate a text field for minutes
+        """
+        Sets up text fields
+        :return:
+        """
+        # Generate 6 text fields for max and min values
         t1 = Window.TextBox("txtTempMin", 5, 1, 350, 300)
         t2 = Window.TextBox("txtTempMax", 5, 1, 450, 300)
         t3 = Window.TextBox("txtPrcpMin", 5, 1, 350, 350)
@@ -71,7 +86,7 @@ class UserInterface:
         t5 = Window.TextBox("txtWindMin", 5, 1, 350, 400)
         t6 = Window.TextBox("txtWindMax", 5, 1, 450, 400)
 
-        # Attach function to text box
+        # Attach function to text boxes (Allows values to be updated when user types)
         t1.on_keyup = lambda window, args: self.set_values()
         t2.on_keyup = lambda window, args: self.set_values()
         t3.on_keyup = lambda window, args: self.set_values()
@@ -88,6 +103,10 @@ class UserInterface:
         self.__main_frame.add_widget(t6)
 
     def __create_labels(self):
+        """
+        Sets up labels in window
+        :return:
+        """
         # generate a big label
         big_label = Window.Label("lblTitle", "Weather prediction input settings", 40, 1, -50, 0)
         big_label.forecolor = "red"
@@ -112,8 +131,13 @@ class UserInterface:
         self.__main_frame.add_widget(l5)
 
     def __create_buttons(self):
+        """
+        Sets up buttons in window
+        :return:
+        """
         # Generate Exit button:
         b1 = Window.Button("btnExit", "Exit", 10, 1, 350, 450)
+        # Execute button:
         b2 = Window.Button("btnExecute", "Execute", 10, 1, 150, 450)
 
         # Attach functions to buttons:
@@ -125,6 +149,11 @@ class UserInterface:
         self.__main_frame.add_widget(b2)
 
     def __create_comboboxes(self):
+        """
+        Combo/Dropdown boxes for selecting crops and location
+        :return:
+        """
+        #Create combo boxes:
         crop_box=Window.ComboBox("cmbCrop", self.__crop_options, 0, 20, 1, 100, 100)
         location_box=Window.ComboBox("cmbLocation",self.__location_options,0, 20,1,100,150)
 
@@ -146,6 +175,10 @@ class UserInterface:
 
     # =================================Data Processing========================================
     def display_predictions(self):
+        """
+        Runs when user clicks execute button
+        :return:
+        """
         self.__import_data()
         self.reset_models()
         self.filter_data(self.__location_to_use)
@@ -154,11 +187,19 @@ class UserInterface:
         self.show_graph()
 
     def reset_models(self):
+        """
+        Reset all models before training
+        :return:
+        """
         self.__temp_model.reset_model()
         self.__prcp_model.reset_model()
         self.__wind_model.reset_model()
 
     def populate_values(self):
+        """
+        When user selects from the crop selection will input values automatically
+        :return:
+        """
         crop=self.__crop_variable.get()
         put=self.__main_frame.set_text_value
         if crop in self.__crop_dict:
@@ -173,6 +214,10 @@ class UserInterface:
         self.set_values()
 
     def set_values(self):
+        """
+        Update internal values to match what are in the input boxes
+        :return:
+        """
         location=self.__location_variable.get()
         if not location or location==self.LOCATION_DEFAULT_TEXT:
             self.__location_to_use=None
@@ -201,6 +246,10 @@ class UserInterface:
 
 
     def __import_data(self):
+        """
+        Import data
+        :return:
+        """
         datafile="../data/final_combined_data.csv"
         cropfile="../data/crop_conditions_updated.csv"
 
@@ -218,6 +267,11 @@ class UserInterface:
 
 
     def __prepare_data(self,dataset):
+        """
+        Drop unnecessary columns and sort data
+        :param dataset:
+        :return:
+        """
         d=copy.deepcopy(dataset)
         d.drop_data("SOURCE_FILE")
         d.drop_data("VALUE")
@@ -230,6 +284,12 @@ class UserInterface:
         return d
 
     def filter_data(self,location:str=None):
+        """
+        Filter by location and impute Temperature data if Tmin and Tmax are present and Tavg is blank
+        Also sets graph colors and titles
+        :param location: Location to filter data by
+        :return:
+        """
         location_field='COUNTY'
         if location:
             self.__temp_data.filter_data(location_field,location)
@@ -263,6 +323,10 @@ class UserInterface:
         self.__wind_data.set_graph_color("black","green")
 
     def train_models(self):
+        """
+        Train the models or alert user if dataset is empty
+        :return:
+        """
         tm=self.__temp_model
         td=self.__temp_data
 
@@ -276,7 +340,7 @@ class UserInterface:
             tm.train_model(td)
         else:
             self.__main_window.show_message(
-                "No data available for the specified temperatures in this location.",
+                "No data available for the specified TEMPERATURES in this location.",
                 title="Empty Dataset"
             )
 
@@ -284,7 +348,7 @@ class UserInterface:
             pm.train_model(p_d)
         else:
             self.__main_window.show_message(
-                "No data available for the specified precipitation in this location.",
+                "No data available for the specified PRECIPITATION in this location.",
                 title="Empty Dataset"
             )
 
@@ -292,11 +356,15 @@ class UserInterface:
             wm.train_model(wd)
         else:
             self.__main_window.show_message(
-                "No data available for the specified wind speed in this location.",
+                "No data available for the specified WIND SPEED in this location.",
                 title="Empty Dataset"
             )
 
     def get_predictions(self):
+        """
+        Run predictions on trained data
+        :return:
+        """
         tm=self.__temp_model
         td=self.__temp_data
 
@@ -315,6 +383,10 @@ class UserInterface:
 
 
     def show_graph(self):
+        """
+        Apply a gaussian curve and display graphs for each variable.
+        :return:
+        """
         self.__temp_data.gaussify()
         self.__prcp_data.gaussify()
         self.__wind_data.gaussify()

@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="99317609-a16a-40d3-a299-7e059cb7ad4d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/src/gui/UserInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/UserInterface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/Window_GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Window_GUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/weather_app/run_weather.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/weather_app/run_weather.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
