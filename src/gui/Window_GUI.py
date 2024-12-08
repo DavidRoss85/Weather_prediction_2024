@@ -168,6 +168,7 @@ class Window(_Parent):
         self.__e_value=dict()   #Special dictionary for text values returned from textboxes
         self.__background = Window.DEFAULT_BACKGROUND_COLOR     #Background color
         self.__forecolor = Window.DEFAULT_FONT_COLOR    #Font color
+
         #Event handling functions:
         self.__on_click = None
         self.__mouse_over = None
@@ -179,7 +180,22 @@ class Window(_Parent):
 
 
     def show_message(self,message:str,*,title=None,box_type=None,icon=None,default=None,parent=None,command=None):
-        messagebox.Message(message=message,title=title,icon=icon,type=box_type,default=default,parent=parent,command=command).show()
+        """
+        Shows a message box user tkinter
+        :param message: message to display
+        :param title: Title of window
+        :param box_type: Example OK/ABORTRETRY
+        :param icon: Info icon exclamation etc
+        :param default:
+        :param parent: Will attach to this window and display in front of it
+        :param command: Function to be executed when user clicks Ok
+        :return:
+        """
+        messagebox.Message(
+            message=message,title=title,icon=icon,
+            type=box_type,default=default,parent=parent,
+            command=command
+        ).show()
 
     def display_window(self):
         """
@@ -465,51 +481,3 @@ class Window(_Parent):
                 offvalue=0
             )
 
-
-
-## For testing:
-
-# from input_validation import *
-# def win_keypress(self,key_event):
-#     if key_event.keycode==65:
-#         print("You pressed the A key")
-#
-#
-# def keypress(self,key_event):
-#     print(key_event.keycode)
-#
-# def simple_function(self, args):
-#     # self.set_text_value("txtNum1","Hooray!")
-#     x= validate_float(self.get_text_value("txtNum1"))["value"]
-#     y = validate_float(self.get_text_value("txtNum2"))["value"]
-#     answer=x+y
-#     self.get_child("lblAnswer").config(text=answer)
-#
-#
-# def main(): #for testing
-#     my_window=Window("This window",800,600)
-#     my_frame=Window.Frame("frmMain1",320,320,200,100)
-#
-#     my_button=Window.Button("btnExecute","Execute",6,1,0,250)
-#     my_button.on_click=simple_function
-#     my_frame.add_widget(my_button)
-#
-#     t=Window.TextBox("txtNum1",20,20,0,100)
-#     my_frame.add_widget(t)
-#     t = Window.TextBox("txtNum2", 20, 20,0, 150)
-#     my_frame.add_widget(t)
-#
-#
-#
-#     l=Window.Label("lblAnswer","",20,1,0,200)
-#     my_frame.add_widget(l)
-#     l = Window.Label("lblLabel", "Let's add two numbers!", 20, 1,  0, 50)
-#     my_frame.add_widget(l)
-#
-#     my_window.add_widget(my_frame)
-#     my_window.display_window()
-#     print("TEXT")
-#
-#
-# if __name__=="__main__":
-#     main()

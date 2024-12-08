@@ -9,7 +9,7 @@ from src.utils.input_validation import validate_float
 
 class UserInterface:
     """
-    The main window the user will interface with
+    The main window the user will interface with (Uses tkinter library)
     """
     LOCATION_TITLE='COUNTY'
     TEMPERATURE_TITLE='TAVG'
@@ -18,36 +18,45 @@ class UserInterface:
     LOCATION_DEFAULT_TEXT = "Select a location"
 
     def __init__(self):
+        #Main window and frame to hold objects
         self.__main_window=Window("Crop Weather predictor",1024,768)
         self.__main_frame=Window.Frame("mainFrame",1024,768,0,0,)
 
+        #Variables for the location dropdown menu
         self.__location_variable=Window.StringVar()
         self.__location_options=[]
         self.__location_to_use=None
 
+        #Variables for the crop dropdown menu
         self.__crop_variable=Window.StringVar()
         self.__crop_dict=dict()
         self.__crop_options=[]
 
+        #Used for checkboxes for enabling variable charting
         self.__temp_checked=Window.IntVar()
         self.__prcp_checked=Window.IntVar()
         self.__wind_checked=Window.IntVar()
 
+        #Datasets for each variable
         self.__main_data=None
         self.__temp_data=None
         self.__prcp_data=None
         self.__wind_data=None
 
+        #Models to handle the dataset and charting
         self.__temp_model=NaiveBayesModel()
         self.__prcp_model=NaiveBayesModel()
         self.__wind_model=NaiveBayesModel()
 
+        #Ranges for each dataset
         self.__temp_range=Range(20,55)
         self.__prcp_range=Range(0,1,0.01)
         self.__wind_range=Range(0,5,0.01)
 
+        #Handles the charting
         self.__graph=GraphGUI("Condition Probabilities","Day of Year","Likelihood")
 
+        #Import data
         self.__import_data()
 
         # Generate window:
@@ -225,24 +234,24 @@ class UserInterface:
             self.__location_to_use=location
 
 
-
+        #The functions used: (Just so i don't have to keep typing it)
         val=self.__main_frame.get_text_value
         flt=validate_float
 
+        #Record Temp min and max values
         t_min=flt(val("txtTempMin"))["value"]
         t_max=flt(val("txtTempMax"))["value"]
         self.__temp_range=Range(t_min,t_max,1)
 
+        #Record precipitation min and max values:
         p_min=flt(val("txtPrcpMin"))["value"]
         p_max=flt(val("txtPrcpMax"))["value"]
         self.__prcp_range=Range(p_min,p_max,0.01)
 
+        #Record wind min and max values (Set ranges)
         w_min=flt(val("txtWindMin"))["value"]
         w_max=flt(val("txtWindMax"))["value"]
         self.__wind_range=Range(w_min,w_max,0.01)
-
-        print(f"LOCATION SET TO: {location}")
-        print(f"P_MIN: {p_min}")
 
 
     def __import_data(self):
@@ -253,14 +262,17 @@ class UserInterface:
         datafile="../data/final_combined_data.csv"
         cropfile="../data/crop_conditions_updated.csv"
 
+        #Import csv file into dataset and process:
         self.__main_data=DataSet("Everything",datafile)
         crop_data=DataSet("Crops",cropfile)
 
+        #Copy the imported data, process it and save it to each dataset:
         my_data=copy.deepcopy(self.__main_data)
         self.__temp_data= self.__prepare_data(my_data)
         self.__wind_data= self.__prepare_data(my_data)
         self.__prcp_data= self.__prepare_data(my_data)
 
+        #Generate dropdown lists for the combobox components
         self.__location_options=self.__main_data.get_category_list('COUNTY')
         self.__crop_dict=crop_data.get_dictionary_from_data('Commodity')
         self.__crop_options=[key for key in self.__crop_dict]
@@ -272,7 +284,10 @@ class UserInterface:
         :param dataset:
         :return:
         """
+
         d=copy.deepcopy(dataset)
+
+        #Drop unecessary data and duplicates:
         d.drop_data("SOURCE_FILE")
         d.drop_data("VALUE")
         d.drop_data('COMMODITY')
@@ -281,6 +296,7 @@ class UserInterface:
         d.convert_dates_to_julian('DATE')
         d.sort_data(['YEAR'])
 
+        #Return updated dataset
         return d
 
     def filter_data(self,location:str=None):
@@ -291,6 +307,7 @@ class UserInterface:
         :return:
         """
         location_field='COUNTY'
+        #Filter location:
         if location:
             self.__temp_data.filter_data(location_field,location)
             self.__wind_data.filter_data(location_field,location)
@@ -338,6 +355,12 @@ class UserInterface:
         wm=self.__wind_model
         wd=self.__wind_data
 
+        #Sometimes because of filtering and parameters, a dataset may
+        #be empty. This can throw an exception in the model, so check
+        # before attempting to train with an empty dataset.
+        # Displays a message if the dataset is empty.
+
+        #Temperature dataset:
         if not td.is_empty():
             tm.train_model(td)
         else:
@@ -346,6 +369,7 @@ class UserInterface:
                 title="Empty Dataset"
             )
 
+        #Precipitation dataset:
         if not p_d.is_empty():
             pm.train_model(p_d)
         else:
@@ -354,6 +378,7 @@ class UserInterface:
                 title="Empty Dataset"
             )
 
+        #Wind dataset:
         if not wd.is_empty():
             wm.train_model(wd)
         else:
@@ -376,6 +401,7 @@ class UserInterface:
         wm=self.__wind_model
         wd=self.__wind_data
 
+        #If the model has been trained, run predictions based on input:
         if tm.is_trained():
             td=tm.run_prediction(td)
         if pm.is_trained():
@@ -389,10 +415,13 @@ class UserInterface:
         Apply a gaussian curve and display graphs for each variable.
         :return:
         """
+
+        #Apply a gaussian curve to the data to smoothen it out
         self.__temp_data.gaussify()
         self.__prcp_data.gaussify()
         self.__wind_data.gaussify()
 
+        #Show graphs generated:
         self.__graph.add_graph(self.__temp_data.graph)
         self.__graph.add_graph(self.__prcp_data.graph)
         self.__graph.add_graph(self.__wind_data.graph)
